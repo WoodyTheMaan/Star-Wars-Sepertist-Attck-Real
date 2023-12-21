@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace STAR_WARS_SEPERTIST_ATTACK_
+namespace Star_Wars_Sepertist_Attck__Real
 {
     public class Game1 : Game
     {
@@ -10,9 +10,15 @@ namespace STAR_WARS_SEPERTIST_ATTACK_
         private SpriteBatch _spriteBatch;
         Rectangle[] spriteSheetCoordinates;
         int currentSprite;
-        Texture2D menuImage;
+        Texture2D menuImage ;
         Texture2D texture;
         float timer;
+        Screen screen;
+        enum Screen
+        {
+            Menu
+        }
+        
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -30,6 +36,7 @@ namespace STAR_WARS_SEPERTIST_ATTACK_
                 new Rectangle(445, 51, 22, 42), //Walk1
                 new Rectangle(167, 150, 25, 42), //walk2
             };
+            screen = Screen.Menu;
             base.Initialize();
         }
 
@@ -37,6 +44,7 @@ namespace STAR_WARS_SEPERTIST_ATTACK_
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             texture = Content.Load<Texture2D>("Clone Trooper Better Sprite Sheet");
+            menuImage = Content.Load<Texture2D>("Main Menu Picture");
             // TODO: use this.Content to load your game content here
         }
 
@@ -65,8 +73,10 @@ namespace STAR_WARS_SEPERTIST_ATTACK_
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
             _spriteBatch.Begin();
             _spriteBatch.Draw(texture, new Vector2(), spriteSheetCoordinates[currentSprite], Color.White);
+            SpriteBatch.Draw(menuImage, )
             _spriteBatch.End();
             base.Draw(gameTime);
         }
