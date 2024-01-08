@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Star_Wars_Sepertist_Attck!_Real
+namespace Star_Wars_Sepertist_Attck
 {
     internal class ButtonClass
 {
