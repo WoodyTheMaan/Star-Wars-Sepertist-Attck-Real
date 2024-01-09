@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Star_Wars_Sepertist_Attck;
 
 namespace Star_Wars_Sepertist_Attck__Real
 {
@@ -13,8 +14,8 @@ namespace Star_Wars_Sepertist_Attck__Real
         int currentSprite;
         SoundEffectInstance menuMusic;
         SoundEffect menuMusicMenu;
-        Texture2D menuImage;
-        Texture2D texture;
+        Texture2D menuImage, spriteSheet;
+        ButtonClass[] menuButtons;
         float timer;
         Screen screen;
         enum Screen
@@ -50,11 +51,17 @@ namespace Star_Wars_Sepertist_Attck__Real
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            texture = Content.Load<Texture2D>("Clone Trooper Better Sprite Sheet");
+            spriteSheet = Content.Load<Texture2D>("Clone Trooper Better Sprite Sheet");
             menuImage = Content.Load<Texture2D>("Main Menu Picture");
             menuMusicMenu = Content.Load<SoundEffect>("CloneGame Menu Theme");
             menuMusic = menuMusicMenu.CreateInstance();
             // TODO: use this.Content to load your game content here
+            Texture2D rectTex = Content.Load<Texture2D>("rectangle");
+            menuButtons = new ButtonClass[]
+            {
+                new(rectTex, new Rectangle(250, 125, 200, 40), "PLAY CAMPAIGN", Content.Load<SoundEffect>("Menu Button Hover"), Content.Load<SpriteFont>("File"))
+                new(rectTex, new Rectangle(450, 200, 200, 40, "OPTIONS", Content.Load<SoundEffect>("Menu Button Hover"), Content.Load<SpriteFont>("File"))
+            };
         }
 
         protected override void Update(GameTime gameTime)
@@ -75,6 +82,9 @@ namespace Star_Wars_Sepertist_Attck__Real
             if (screen == Screen.Menu)
             {
                 menuMusic.Play();
+                var mouse = Mouse.GetState();
+                foreach (var button in menuButtons)
+                    button.Update(mouse);
             }
             // TODO: Add your update logic here
 
@@ -88,10 +98,12 @@ namespace Star_Wars_Sepertist_Attck__Real
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
-            _spriteBatch.Draw(texture, new Vector2(), spriteSheetCoordinates[currentSprite], Color.White);
+            //_spriteBatch.Draw(spriteSheet, new Vector2(), spriteSheetCoordinates[currentSprite], Color.White);
             if (screen == Screen.Menu)
             {
                 _spriteBatch.Draw(menuImage, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
+                foreach (ButtonClass b in menuButtons)
+                    b.Draw(_spriteBatch);
                
             }
 
