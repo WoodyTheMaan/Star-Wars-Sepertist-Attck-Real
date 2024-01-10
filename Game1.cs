@@ -13,14 +13,16 @@ namespace Star_Wars_Sepertist_Attck__Real
         Rectangle[] spriteSheetCoordinates;
         int currentSprite;
         SoundEffectInstance menuMusic;
-        SoundEffect menuMusicMenu;
-        Texture2D menuImage, spriteSheet;
+        SoundEffect buttonClicked;
+        Texture2D menuImage, spriteSheet, logo;
         ButtonClass[] menuButtons;
         float timer;
         Screen screen;
         enum Screen
         {
-            Menu
+            Menu,
+            TheGame,
+            Options
         }
 
         public Game1()
@@ -52,39 +54,45 @@ namespace Star_Wars_Sepertist_Attck__Real
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteSheet = Content.Load<Texture2D>("Clone Trooper Better Sprite Sheet");
+            logo = Content.Load<Texture2D>("RealProjectLogo");
             menuImage = Content.Load<Texture2D>("Main Menu Picture");
-            menuMusicMenu = Content.Load<SoundEffect>("CloneGame Menu Theme");
-            menuMusic = menuMusicMenu.CreateInstance();
+            menuMusic = Content.Load<SoundEffect>("sounds/CloneGame Menu Theme").CreateInstance();
+            buttonClicked = Content.Load<SoundEffect>("Menu Button Clicked");
             // TODO: use this.Content to load your game content here
             Texture2D rectTex = Content.Load<Texture2D>("rectangle");
             menuButtons = new ButtonClass[]
             {
-                new(rectTex, new Rectangle(250, 125, 200, 40), "PLAY CAMPAIGN", Content.Load<SoundEffect>("Menu Button Hover"), Content.Load<SpriteFont>("File"))
-                new(rectTex, new Rectangle(450, 200, 200, 40, "OPTIONS", Content.Load<SoundEffect>("Menu Button Hover"), Content.Load<SpriteFont>("File"))
+                new(rectTex, new Rectangle(220, 150, 235, 40), "PLAY CAMPAIGN", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File")),
+                new(rectTex, new Rectangle(275, 225, 125, 40), "OPTIONS", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File")),
+                new(rectTex, new Rectangle(220, 300, 235, 40), "EXIT TO WINDOWS", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File"))
+
             };
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (timer > 250)
-            {
-                timer = 0;
-                if (currentSprite == 1)
-                {
-                    currentSprite = 2;
-                }
-                else
-                    currentSprite = 1;
-            }
+
             if (screen == Screen.Menu)
             {
                 menuMusic.Play();
                 var mouse = Mouse.GetState();
-                foreach (var button in menuButtons)
-                    button.Update(mouse);
+                if (menuButtons[0].Update(mouse))
+                {
+                    screen = Screen.TheGame;
+                    menuMusic.Stop();
+                    buttonClicked.Play();
+                }
+                else if (menuButtons[1].Update(mouse))
+                {
+                    screen = Screen.Options;
+                    buttonClicked.Play();
+                }
+                else if (menuButtons[2].Update(mouse))
+                {
+                    Exit();
+                    buttonClicked.Play();
+                }
             }
             // TODO: Add your update logic here
 
@@ -94,18 +102,27 @@ namespace Star_Wars_Sepertist_Attck__Real
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
             //_spriteBatch.Draw(spriteSheet, new Vector2(), spriteSheetCoordinates[currentSprite], Color.White);
             if (screen == Screen.Menu)
             {
+
                 _spriteBatch.Draw(menuImage, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
+                _spriteBatch.Draw(logo, new Rectangle(179, 10, 330, 130), Color.White);
                 foreach (ButtonClass b in menuButtons)
                     b.Draw(_spriteBatch);
-               
             }
+            else if (screen == Screen.TheGame)
+            {
+                _spriteBatch.Draw(spriteSheet, new Rectangle(179, 10, 330, 130), spriteSheetCoordinates[0], Color.White);
+            }
+            else if (screen == Screen.Options)
+            {
+
+            }
+
 
             _spriteBatch.End();
             base.Draw(gameTime);

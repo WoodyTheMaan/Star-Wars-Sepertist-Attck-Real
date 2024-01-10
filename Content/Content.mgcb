@@ -32,18 +32,6 @@
 /processorParam:TextureFormat=Compressed
 /build:ButtonFont.spritefont
 
-#begin Clone Blastshot.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Clone Blastshot.mp3
-
-#begin Clone Death.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Clone Death.mp3
-
 #begin Clone Trooper Better Sprite Sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -56,29 +44,8 @@
 /processorParam:TextureFormat=Color
 /build:Clone Trooper Better Sprite Sheet.png
 
-#begin Clone VoiceLines.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Clone VoiceLines.mp3
-
-#begin CloneGame Menu Theme.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:CloneGame Menu Theme.mp3
-
-#begin Droid BlastShot.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Droid BlastShot.mp3
-
-#begin Droid VoiceLines.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Droid VoiceLines.mp3
+#begin Death Star.otf
+/copy:Death Star.otf
 
 #begin File.spritefont
 /importer:FontDescriptionImporter
@@ -111,41 +78,17 @@
 /processorParam:TextureFormat=Color
 /build:Main Menu Picture.png
 
-#begin Menu Back Button.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Menu Back Button.mp3
-
-#begin Menu Button Clicked.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Menu Button Clicked.mp3
-
-#begin Menu Button Hover.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Menu Button Hover.mp3
-
-#begin Menu Sounds.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Menu Sounds.mp3
-
-#begin Official Clone BlastShot.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Official Clone BlastShot.mp3
-
-#begin Official Droid Blast Shot.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Official Droid Blast Shot.mp3
+#begin RealProjectLogo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:RealProjectLogo.png
 
 #begin rectangle.png
 /importer:TextureImporter
@@ -161,6 +104,78 @@
 
 #begin RestaurantMenu.ttf
 /copy:RestaurantMenu.ttf
+
+#begin sounds/Clone Blastshot.mp3
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Clone Blastshot.mp3
+
+#begin sounds/Clone Death.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Clone Death.mp3
+
+#begin sounds/Clone VoiceLines.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Clone VoiceLines.mp3
+
+#begin sounds/CloneGame Menu Theme.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/CloneGame Menu Theme.mp3
+
+#begin sounds/Droid BlastShot.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Droid BlastShot.mp3
+
+#begin sounds/Droid VoiceLines.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Droid VoiceLines.mp3
+
+#begin sounds/Menu Back Button.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Menu Back Button.mp3
+
+#begin sounds/Menu Button Clicked.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Menu Button Clicked.mp3
+
+#begin sounds/Menu Button Hover.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Menu Button Hover.mp3
+
+#begin sounds/Menu Sounds.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Menu Sounds.mp3
+
+#begin sounds/Official Clone BlastShot.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Official Clone BlastShot.mp3
+
+#begin sounds/Official Droid Blast Shot.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Official Droid Blast Shot.mp3
 
 #begin Star Wars Sep Logo.png
 /importer:TextureImporter

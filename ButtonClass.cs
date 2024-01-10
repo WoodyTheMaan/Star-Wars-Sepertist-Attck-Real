@@ -33,7 +33,7 @@ namespace Star_Wars_Sepertist_Attck
                 if (!didSoundPlay)
                     buttSound.Play();
                 didSoundPlay = true;
-                buttColor = Color.DarkBlue * 0.7f;
+                buttColor = Color.DarkBlue * 0.6f;
                 return mouse.LeftButton == ButtonState.Pressed;
             }
             else
@@ -46,7 +46,7 @@ namespace Star_Wars_Sepertist_Attck
         public void Draw(SpriteBatch Sprite)
         {
             Sprite.Draw(bgtex, location, buttColor);
-            Sprite.DrawString(font, text, new Vector2(location.X + 5, location.Y+10), Color.White);
+            Sprite.DrawString(font, text, new Vector2(location.X + 5, location.Y+5), Color.White);
         }
     }
 }
