@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Star_Wars_Sepertist_Attck;
+using System.Dynamic;
 
 namespace Star_Wars_Sepertist_Attck__Real
 {
@@ -10,14 +11,14 @@ namespace Star_Wars_Sepertist_Attck__Real
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        Rectangle[] spriteSheetCoordinates;
-        int currentSprite;
         SoundEffectInstance menuMusic;
         SoundEffect buttonClicked;
-        Texture2D menuImage, spriteSheet, logo;
+        Texture2D menuImage, logo;
         ButtonClass[] menuButtons;
         float timer;
+        CloneTrooperClass josiah;
         Screen screen;
+        KeyboardState keyboard;
         enum Screen
         {
             Menu,
@@ -38,13 +39,8 @@ namespace Star_Wars_Sepertist_Attck__Real
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.PreferredBackBufferWidth = 700;
             _graphics.ApplyChanges();
-            spriteSheetCoordinates = new Rectangle[]
-            {
-
-                new Rectangle(16, 23, 23,42), //StandStill
-                new Rectangle(445, 51, 22, 42), //Walk1
-                new Rectangle(167, 150, 25, 42), //walk2
-            };
+            
+          
             screen = Screen.Menu;
             base.Initialize();
 
@@ -53,7 +49,18 @@ namespace Star_Wars_Sepertist_Attck__Real
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            spriteSheet = Content.Load<Texture2D>("Clone Trooper Better Sprite Sheet");
+
+            var spriteSheet = Content.Load<Texture2D>("Clone Trooper Better Sprite Sheet");
+            var spriteSheetCoordinates = new Rectangle[]
+            {
+                new Rectangle(16, 23, 23,42), //StandStill
+                new Rectangle(16, 23, 23,42), //StandStill  
+                new Rectangle(16, 23, 23,42), //StandStill
+                new Rectangle(167, 150, 25, 42), //walk2  
+                new Rectangle (190, 165, 21, 69)  
+            };
+            josiah = new CloneTrooperClass(spriteSheet, spriteSheetCoordinates, 0, new Rectangle(300, 200, 50, 110), 5);
+            
             logo = Content.Load<Texture2D>("RealProjectLogo");
             menuImage = Content.Load<Texture2D>("Main Menu Picture");
             menuMusic = Content.Load<SoundEffect>("sounds/CloneGame Menu Theme").CreateInstance();
@@ -72,7 +79,7 @@ namespace Star_Wars_Sepertist_Attck__Real
         protected override void Update(GameTime gameTime)
         {
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
+            keyboard = Keyboard.GetState();    
             if (screen == Screen.Menu)
             {
                 menuMusic.Play();
@@ -93,6 +100,10 @@ namespace Star_Wars_Sepertist_Attck__Real
                     Exit();
                     buttonClicked.Play();
                 }
+            }
+            else if (screen == Screen.TheGame)
+            {
+                josiah.Update(keyboard, _graphics);
             }
             // TODO: Add your update logic here
 
@@ -116,7 +127,7 @@ namespace Star_Wars_Sepertist_Attck__Real
             }
             else if (screen == Screen.TheGame)
             {
-                _spriteBatch.Draw(spriteSheet, new Rectangle(179, 10, 330, 130), spriteSheetCoordinates[0], Color.White);
+                josiah.Draw(_spriteBatch);
             }
             else if (screen == Screen.Options)
             {
