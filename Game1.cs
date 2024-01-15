@@ -12,6 +12,7 @@ namespace Star_Wars_Sepertist_Attck__Real
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         SoundEffectInstance menuMusic;
+        SpriteFont copyrightFont;
         SoundEffect buttonClicked;
         Texture2D menuImage, logo;
         ButtonClass[] menuButtons;
@@ -49,6 +50,7 @@ namespace Star_Wars_Sepertist_Attck__Real
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Texture2D rectTex = Content.Load<Texture2D>("rectangle");
 
             var spriteSheet = Content.Load<Texture2D>("Clone Trooper Better Sprite Sheet");
             var spriteSheetCoordinates = new Rectangle[]
@@ -59,20 +61,20 @@ namespace Star_Wars_Sepertist_Attck__Real
                 new Rectangle(167, 150, 25, 42), //walk2  
                 new Rectangle (190, 165, 21, 69)  
             };
-            josiah = new CloneTrooperClass(spriteSheet, spriteSheetCoordinates, 0, new Rectangle(300, 200, 50, 110), 5);
+            josiah = new CloneTrooperClass(spriteSheet, spriteSheetCoordinates, 0, new Rectangle(300, 200, 50, 110), 5,rectTex);
             
             logo = Content.Load<Texture2D>("RealProjectLogo");
             menuImage = Content.Load<Texture2D>("Main Menu Picture");
             menuMusic = Content.Load<SoundEffect>("sounds/CloneGame Menu Theme").CreateInstance();
             buttonClicked = Content.Load<SoundEffect>("Menu Button Clicked");
+            //copyrightFont = Content.Load<SpriteFont>("Death Star");
             // TODO: use this.Content to load your game content here
-            Texture2D rectTex = Content.Load<Texture2D>("rectangle");
             menuButtons = new ButtonClass[]
             {
                 new(rectTex, new Rectangle(220, 150, 235, 40), "PLAY CAMPAIGN", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File")),
                 new(rectTex, new Rectangle(275, 225, 125, 40), "OPTIONS", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File")),
                 new(rectTex, new Rectangle(220, 300, 235, 40), "EXIT TO WINDOWS", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File"))
-
+                
             };
         }
 
@@ -124,6 +126,7 @@ namespace Star_Wars_Sepertist_Attck__Real
                 _spriteBatch.Draw(logo, new Rectangle(179, 10, 330, 130), Color.White);
                 foreach (ButtonClass b in menuButtons)
                     b.Draw(_spriteBatch);
+               // _spriteBatch.DrawString(copyrightFont, "Hello", new Vector2(120, 120), Color.White );
             }
             else if (screen == Screen.TheGame)
             {
