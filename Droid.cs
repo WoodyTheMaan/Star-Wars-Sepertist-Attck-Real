@@ -18,7 +18,7 @@ namespace Star_Wars_Sepertist_Attck
 
         public Droid(Texture2D droidTexture, Rectangle[] coordinatesRectangle, int currentCoordinate, Rectangle droidRect, int droidSpeed, Texture2D blastTexture)
         {
-            this.droidTexture = droidTexture;
+            this.droidTexture = droidTexture; 
             this.coordinatesRectangle = coordinatesRectangle;
             this.currentCoordinate = currentCoordinate;
             this.droidRect = droidRect;
