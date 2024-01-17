@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Star_Wars_Sepertist_Attck;
+using System;
 using System.Collections.Generic;
-using System.Dynamic;
 
 namespace Star_Wars_Sepertist_Attck__Real
 {
@@ -18,6 +18,9 @@ namespace Star_Wars_Sepertist_Attck__Real
         Texture2D menuImage, logo;
         ButtonClass[] menuButtons;
         float timer;
+        Random generator = new Random();
+
+        int speedOfDroid = 1, playerWinningSoFar = 0;
         CloneTrooperClass josiah;
         List<Droid> enemies;
         Texture2D droidSpriteSheet, rectTex;
@@ -45,8 +48,8 @@ namespace Star_Wars_Sepertist_Attck__Real
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.PreferredBackBufferWidth = 700;
             _graphics.ApplyChanges();
-            
-          
+
+
             screen = Screen.Menu;
             base.Initialize();
 
@@ -67,7 +70,7 @@ namespace Star_Wars_Sepertist_Attck__Real
                 new Rectangle(16, 23, 23,42), //StandStill
                 new Rectangle(167, 150, 25, 42), //walk2  
                 new Rectangle (190, 165, 21, 69)
-            }; 
+            };
             droidspriteSheetCoordinates = new Rectangle[]
             {
                 new Rectangle(16, 23, 23,42), //StandStill
@@ -79,10 +82,12 @@ namespace Star_Wars_Sepertist_Attck__Real
             josiah = new CloneTrooperClass(spriteSheet, spriteSheetCoordinates, 0, new Rectangle(300, 200, 50, 110), 5, Content.Load<Texture2D>("CloneBlast"), Content.Load<SoundEffect>("sounds/Clone BlastShotfIX"));
             enemies = new()
             {
-                //new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(300, 200, 80, 110), 1, rectTex),
+                new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(0, 0, 80, 110), 1, rectTex),
+                new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(200, 90, 80, 110), 1, rectTex),
+                new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(123, 16, 80, 110), 1, rectTex),
 
             };
-            
+
             logo = Content.Load<Texture2D>("RealProjectLogo");
             menuImage = Content.Load<Texture2D>("Main Menu Picture");
             menuMusic = Content.Load<SoundEffect>("sounds/CloneGame Menu Theme").CreateInstance();
@@ -94,16 +99,17 @@ namespace Star_Wars_Sepertist_Attck__Real
                 new(rectTex, new Rectangle(220, 150, 235, 40), "PLAY CAMPAIGN", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File")),
                 new(rectTex, new Rectangle(275, 225, 125, 40), "OPTIONS", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File")),
                 new(rectTex, new Rectangle(220, 300, 235, 40), "EXIT TO WINDOWS", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File"))
-                
+
             };
         }
 
         protected override void Update(GameTime gameTime)
         {
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            keyboard = Keyboard.GetState();    
+            keyboard = Keyboard.GetState();
             if (screen == Screen.Menu)
             {
+                playerWinningSoFar = 0;
                 menuMusic.Play();
                 var mouse = Mouse.GetState();
                 if (menuButtons[0].Update(mouse))
@@ -129,14 +135,36 @@ namespace Star_Wars_Sepertist_Attck__Real
                 droidAttackTheme.Play();
                 if (josiah.Update(keyboard, _graphics, enemies))
                 {
+                    droidAttackTheme.Stop();
                     screen = Screen.Menu;
                 }
-                
+
                 if (timer > 3)
                 {
-                    enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(0, 200, 80, 110), 1, rectTex));
-                    timer = 0; 
-                    
+                    speedOfDroid = 0;
+                    playerWinningSoFar = 0;
+                    _graphics.PreferredBackBufferHeight = 500;
+                    _graphics.PreferredBackBufferWidth = 700;
+                    enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(generator.Next(701), generator.Next(300, 501), 80, 110), speedOfDroid, rectTex));
+                    enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(generator.Next(701), generator.Next(300, 501), 80, 110), speedOfDroid, rectTex));
+                    timer = 0;
+                    playerWinningSoFar = playerWinningSoFar + 1;
+                    if (playerWinningSoFar == 12)
+                    {
+                        speedOfDroid = speedOfDroid + 1;
+                    }
+                    else if (playerWinningSoFar == 25)
+                    {
+                        speedOfDroid = speedOfDroid + 1;
+                    }
+                    else if (playerWinningSoFar == 40)
+                    {
+                        speedOfDroid = speedOfDroid + 2;
+                    }
+                    else if (playerWinningSoFar == 100)
+                    {
+                        speedOfDroid = speedOfDroid + 2;
+                    }
                 }
             }
             // TODO: Add your update logic here
@@ -158,7 +186,7 @@ namespace Star_Wars_Sepertist_Attck__Real
                 _spriteBatch.Draw(logo, new Rectangle(179, 10, 330, 130), Color.White);
                 foreach (ButtonClass b in menuButtons)
                     b.Draw(_spriteBatch);
-               // _spriteBatch.DrawString(copyrightFont, "Hello", new Vector2(120, 120), Color.White );
+                // _spriteBatch.DrawString(copyrightFont, "Hello", new Vector2(120, 120), Color.White );
             }
             else if (screen == Screen.TheGame)
             {
