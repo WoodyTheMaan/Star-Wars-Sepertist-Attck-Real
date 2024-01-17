@@ -44,6 +44,18 @@
 /processorParam:TextureFormat=Color
 /build:Clone Trooper Better Sprite Sheet.png
 
+#begin CloneBlast.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:CloneBlast.png
+
 #begin Death Star.otf
 /copy:Death Star.otf
 
@@ -111,6 +123,12 @@
 /processorParam:Quality=Best
 /build:sounds/Clone Blastshot.mp3
 
+#begin sounds/Clone BlastshotfIX.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Clone BlastshotfIX.wav
+
 #begin sounds/Clone Death.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -140,6 +158,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Droid VoiceLines.mp3
+
+#begin sounds/DroidAttackTheme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/DroidAttackTheme.wav
 
 #begin sounds/Menu Back Button.mp3
 /importer:Mp3Importer

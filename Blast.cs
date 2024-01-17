@@ -21,7 +21,7 @@ namespace Star_Wars_Sepertist_Attck
         {
             blastRect.Offset(blastDirection);
             despawnTimer += 1;
-            return despawnTimer > 100;
+            return despawnTimer > 95;
         }
         public void Draw(SpriteBatch sprite)
         {
