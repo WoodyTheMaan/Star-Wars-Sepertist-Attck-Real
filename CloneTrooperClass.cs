@@ -137,5 +137,6 @@ namespace Star_Wars_Sepertist_Attck
             Sprite.Draw(cloneTexture, cloneRect, coordinatesRectangle[currentCoordinate], Color.White);
 
         }
+        public Rectangle Location { get { return cloneRect; } }
     }
 }

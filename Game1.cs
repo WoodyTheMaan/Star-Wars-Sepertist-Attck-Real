@@ -65,10 +65,10 @@ namespace Star_Wars_Sepertist_Attck__Real
             droidAttackTheme = Content.Load<SoundEffect>("sounds/DroidAttackTheme").CreateInstance();
             var spriteSheetCoordinates = new Rectangle[]
             {
-                new Rectangle(16, 23, 23,42), //StandStill
-                new Rectangle(16, 23, 23,42), //StandStill  
-                new Rectangle(16, 23, 23,42), //StandStill
-                new Rectangle(167, 150, 25, 42), //walk2  
+                new Rectangle(0, 20, 42, 58), //StandStill
+                new Rectangle(0, 79, 42, 58), //StandStill  
+                new Rectangle(43, 80,42, 58), //StandStill
+                new Rectangle(88, 80, 42, 58), //walk2  
                 new Rectangle (190, 165, 21, 69)
             };
             droidspriteSheetCoordinates = new Rectangle[]
@@ -76,10 +76,10 @@ namespace Star_Wars_Sepertist_Attck__Real
                 new Rectangle(16, 23, 23,42), //StandStill
                 new Rectangle(16, 23, 23,42), //StandStill  
                 new Rectangle(16, 23, 23,42), //StandStill
-                new Rectangle(167, 150, 25, 42), //walk2  
-                new Rectangle (190, 165, 21, 69)
+                new Rectangle(167, 150, 23, 42), //walk2  
+                new Rectangle (133, 79, 23, 42)
             };
-            josiah = new CloneTrooperClass(spriteSheet, spriteSheetCoordinates, 0, new Rectangle(300, 200, 50, 110), 5, Content.Load<Texture2D>("CloneBlast"), Content.Load<SoundEffect>("sounds/Clone BlastShotfIX"));
+            josiah = new CloneTrooperClass(spriteSheet, spriteSheetCoordinates, 0, new Rectangle(300, 200, 50, 110), 7, Content.Load<Texture2D>("CloneBlast"), Content.Load<SoundEffect>("sounds/Clone BlastShotfIX"));
             enemies = new()
             {
                 new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(0, 0, 80, 110), 1, rectTex),
@@ -107,6 +107,7 @@ namespace Star_Wars_Sepertist_Attck__Real
         {
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             keyboard = Keyboard.GetState();
+            this.Window.Title = $"The speed of the droids are {speedOfDroid} | Your Republic class has upgraded to {playerWinningSoFar}";
             if (screen == Screen.Menu)
             {
                 playerWinningSoFar = 0;
@@ -117,6 +118,8 @@ namespace Star_Wars_Sepertist_Attck__Real
                     screen = Screen.TheGame;
                     menuMusic.Stop();
                     buttonClicked.Play();
+                    speedOfDroid = 1;
+                    timer = 0;
                     enemies.Clear();
                 }
                 else if (menuButtons[1].Update(mouse))
@@ -141,17 +144,22 @@ namespace Star_Wars_Sepertist_Attck__Real
 
                 if (timer > 3)
                 {
-                    speedOfDroid = 0;
-                    playerWinningSoFar = 0;
-                    _graphics.PreferredBackBufferHeight = 500;
-                    _graphics.PreferredBackBufferWidth = 700;
-                    enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(generator.Next(701), generator.Next(300, 501), 80, 110), speedOfDroid, rectTex));
-                    enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(generator.Next(701), generator.Next(300, 501), 80, 110), speedOfDroid, rectTex));
+                    int offset = 6;
+                    var cloneRect = new Rectangle(josiah.Location.X - offset, josiah.Location.Y - offset, josiah.Location.Width + (offset * 2), josiah.Location.Height + (offset * 2));
+                    for (int i = 0; i < 2; i++)
+                    {
+                        var droidRect = cloneRect;
+                        while (droidRect.Intersects(cloneRect))
+                        {
+                            droidRect = new Rectangle(generator.Next(700, 712), generator.Next(0, 501), 80, 110);
+                        }
+                        enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, droidRect, speedOfDroid, rectTex));
+                    }
                     timer = 0;
-                    playerWinningSoFar = playerWinningSoFar + 1;
+                    playerWinningSoFar += 1;
                     if (playerWinningSoFar == 12)
                     {
-                        speedOfDroid = speedOfDroid + 1;
+                        speedOfDroid += 1;
                     }
                     else if (playerWinningSoFar == 25)
                     {
