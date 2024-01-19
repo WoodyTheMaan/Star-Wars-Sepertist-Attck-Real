@@ -20,8 +20,8 @@ namespace Star_Wars_Sepertist_Attck__Real
         float timer;
         Random generator = new Random();
 
-        int speedOfDroid = 1, playerWinningSoFar = 0;
-        CloneTrooperClass josiah;
+        int speedOfDroid = 1, playerWinningSoFar = 0, whereFirstDroidSpawns, whereSecondDroidSpawns;
+        CloneTrooperClass theCloneTrooper;
         List<Droid> enemies;
         Texture2D droidSpriteSheet, rectTex;
         Rectangle[] droidspriteSheetCoordinates;
@@ -65,11 +65,14 @@ namespace Star_Wars_Sepertist_Attck__Real
             droidAttackTheme = Content.Load<SoundEffect>("sounds/DroidAttackTheme").CreateInstance();
             var spriteSheetCoordinates = new Rectangle[]
             {
-                new Rectangle(0, 20, 42, 58), //StandStill
-                new Rectangle(0, 79, 42, 58), //StandStill  
-                new Rectangle(43, 80,42, 58), //StandStill
-                new Rectangle(88, 80, 42, 58), //walk2  
-                new Rectangle (190, 165, 21, 69)
+                new Rectangle(7, 445, 50, 58), //StandStill
+                new Rectangle(57, 443, 46, 61), //StandStill  
+                new Rectangle(106, 442, 49, 62), //StandStill
+                new Rectangle(157, 444, 47, 60), //walk2  
+                new Rectangle(206, 445, 46, 59),
+                new Rectangle(254, 444, 48, 61),
+                new Rectangle(303, 443, 50, 62),
+                new Rectangle(356, 445, 48, 60),
             };
             droidspriteSheetCoordinates = new Rectangle[]
             {
@@ -78,8 +81,9 @@ namespace Star_Wars_Sepertist_Attck__Real
                 new Rectangle(16, 23, 23,42), //StandStill
                 new Rectangle(167, 150, 23, 42), //walk2  
                 new Rectangle (133, 79, 23, 42)
+                //deez nuts
             };
-            josiah = new CloneTrooperClass(spriteSheet, spriteSheetCoordinates, 0, new Rectangle(300, 200, 50, 110), 7, Content.Load<Texture2D>("CloneBlast"), Content.Load<SoundEffect>("sounds/Clone BlastShotfIX"));
+            theCloneTrooper = new CloneTrooperClass(spriteSheet, spriteSheetCoordinates, 0, new Rectangle(300, 200, 50, 110), 7, Content.Load<Texture2D>("CloneBlast"), Content.Load<SoundEffect>("sounds/Clone BlastShotfIX"));
             enemies = new()
             {
                 new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, new Rectangle(0, 0, 80, 110), 1, rectTex),
@@ -107,7 +111,7 @@ namespace Star_Wars_Sepertist_Attck__Real
         {
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             keyboard = Keyboard.GetState();
-            this.Window.Title = $"The speed of the droids are {speedOfDroid} | Your Republic class has upgraded to {playerWinningSoFar}";
+            this.Window.Title = $"The speed of the droids are {speedOfDroid} | Your Republic class has upgraded from 3 to {playerWinningSoFar + 3}";
             if (screen == Screen.Menu)
             {
                 playerWinningSoFar = 0;
@@ -136,7 +140,7 @@ namespace Star_Wars_Sepertist_Attck__Real
             else if (screen == Screen.TheGame)
             {
                 droidAttackTheme.Play();
-                if (josiah.Update(keyboard, _graphics, enemies))
+                if (theCloneTrooper.Update(keyboard, _graphics, enemies))
                 {
                     droidAttackTheme.Stop();
                     screen = Screen.Menu;
@@ -145,15 +149,44 @@ namespace Star_Wars_Sepertist_Attck__Real
                 if (timer > 3)
                 {
                     int offset = 6;
-                    var cloneRect = new Rectangle(josiah.Location.X - offset, josiah.Location.Y - offset, josiah.Location.Width + (offset * 2), josiah.Location.Height + (offset * 2));
+                    var cloneRect = new Rectangle(theCloneTrooper.Location.X - offset, theCloneTrooper.Location.Y - offset, theCloneTrooper.Location.Width + (offset * 2), theCloneTrooper.Location.Height + (offset * 2));
                     for (int i = 0; i < 2; i++)
                     {
+                        whereFirstDroidSpawns = generator.Next(1, 5);
                         var droidRect = cloneRect;
-                        while (droidRect.Intersects(cloneRect))
+                        if (whereFirstDroidSpawns == 1)
                         {
-                            droidRect = new Rectangle(generator.Next(700, 712), generator.Next(0, 501), 80, 110);
+                            while (droidRect.Intersects(cloneRect))
+                            {
+                                droidRect = new Rectangle(generator.Next(700, 712), generator.Next(0, 501), 80, 110);
+                            }
+                            enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, droidRect, speedOfDroid, rectTex));
                         }
-                        enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, droidRect, speedOfDroid, rectTex));
+                        else if (whereFirstDroidSpawns == 2)
+                        {
+                            while (droidRect.Intersects(cloneRect))
+                            {
+                                droidRect = new Rectangle(generator.Next(0, 12), generator.Next(0, 501), 80, 110);
+                            }
+                            enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, droidRect, speedOfDroid, rectTex));
+                        }
+                        else if (whereFirstDroidSpawns == 3)
+                        {
+                            while (droidRect.Intersects(cloneRect))
+                            {
+                                droidRect = new Rectangle(generator.Next(0, 700), generator.Next(500, 512), 80, 110);
+                            }
+                            enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, droidRect, speedOfDroid, rectTex));
+                        }
+                        else
+                        {
+                            while (droidRect.Intersects(cloneRect))
+                            {
+                                droidRect = new Rectangle(generator.Next(700, 712), generator.Next(0, 501), 80, 110);
+                            }
+                            enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, droidRect, speedOfDroid, rectTex));
+                        }
+                       
                     }
                     timer = 0;
                     playerWinningSoFar += 1;
@@ -198,7 +231,7 @@ namespace Star_Wars_Sepertist_Attck__Real
             }
             else if (screen == Screen.TheGame)
             {
-                josiah.Draw(_spriteBatch);
+                theCloneTrooper.Draw(_spriteBatch);
                 foreach (Droid e in enemies)
                     e.Draw(_spriteBatch);
             }

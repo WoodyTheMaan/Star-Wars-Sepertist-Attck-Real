@@ -16,7 +16,7 @@ namespace Star_Wars_Sepertist_Attck
         
         Rectangle cloneRect; // This rectangle will track where Clone Trooper is and his size
         int cloneSpeed;
-        float coolDown;
+        float coolDown, animationTimer;
         List<Blast> activeBlasts;
         Vector2 lastDirectionMoved;
 
@@ -36,6 +36,7 @@ namespace Star_Wars_Sepertist_Attck
 
         public bool Update(KeyboardState keyboardState, GraphicsDeviceManager graphics, List<Droid>droids)
         {
+          
             bool died = false;
             coolDown -= 0.05f;          
             for (int i = 0; i < activeBlasts.Count; i++)
@@ -50,27 +51,71 @@ namespace Star_Wars_Sepertist_Attck
             Vector2 velocity = new Vector2(0, 0);
             if (keyboardState.IsKeyDown(Keys.A))
             {
+                animationTimer += 1;
+                if (animationTimer > 15)
+                {
+                    animationTimer = 0;
+                    if (currentCoordinate < coordinatesRectangle.Length - 1)
+                    {
+                        currentCoordinate++;
+                    }
+                    else
+                        currentCoordinate = 0;
+                }
                 velocity.X = -1;
-                currentCoordinate = 0; //change 0 to whatever left pic is
+                //currentCoordinate = 0; //change 0 to whatever left pic is
             }
             if (keyboardState.IsKeyDown(Keys.D))
             {
+                animationTimer += 1;
+                if (animationTimer > 15)
+                {
+                    animationTimer = 0;
+                    if (currentCoordinate < coordinatesRectangle.Length - 1)
+                    {
+                        currentCoordinate++;
+                    }
+                    else
+                        currentCoordinate = 0;
+                }
                 velocity.X = 1;
-                currentCoordinate = 1; //change 1 to whatever right pic is
+                //currentCoordinate = 1; //change 1 to whatever right pic is
                 
             }
 
             if (keyboardState.IsKeyDown(Keys.W))
             {
+                animationTimer += 1;
+                if (animationTimer > 15)
+                {
+                    animationTimer = 0;
+                    if (currentCoordinate < coordinatesRectangle.Length - 1)
+                    {
+                        currentCoordinate++;
+                    }
+                    else
+                        currentCoordinate = 0;
+                }
                 velocity.Y = -1;
-                currentCoordinate = 2; //change 2 to whatever up pic is
+                //currentCoordinate = 2; //change 2 to whatever up pic is
                 
             }
 
             if (keyboardState.IsKeyDown(Keys.S))
             {
+                animationTimer += 1;
+                if (animationTimer > 15)
+                {
+                    animationTimer = 0;
+                    if (currentCoordinate < coordinatesRectangle.Length - 1)
+                    {
+                        currentCoordinate++;
+                    }
+                    else
+                        currentCoordinate = 0;
+                }
                 velocity.Y = 1;
-                currentCoordinate = 3; //change 3 to whatever down pic is
+                //currentCoordinate = 3; //change 3 to whatever down pic is
             }
             if (velocity != new Vector2(0, 0))
             {
@@ -82,7 +127,7 @@ namespace Star_Wars_Sepertist_Attck
             //Shoot
             if (keyboardState.IsKeyDown(Keys.Space) && coolDown < 0)
             {
-                Blast newBlast = new Blast(blastTexture, new Rectangle(cloneRect.X, cloneRect.Y, 10, 10), lastDirectionMoved*7);
+                Blast newBlast = new Blast(blastTexture, new Rectangle(cloneRect.X + 30, cloneRect.Y + 35, 10, 10), lastDirectionMoved*12);
                 activeBlasts.Add(newBlast);
                 blastShot.Play();
                 coolDown = 1.5f;
