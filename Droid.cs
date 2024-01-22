@@ -11,8 +11,8 @@ namespace Star_Wars_Sepertist_Attck
         int currentCoordinateDroid;
 
         Rectangle droidRect; // This rectangle will track where B1 Battledroid is and his size
-        int droidSpeed;
-        float coolDownDroid;
+        int droidSpeed, currentCoordinate;
+        float coolDownDroid, animationTimer;
         List<Blast> activeBlasts;
         Vector2 lastDirectionMoved;
 
@@ -41,20 +41,62 @@ namespace Star_Wars_Sepertist_Attck
             if (droidRect.X < playerLoc.X)
             {
                 droidRect.X += droidSpeed;
-                
+                animationTimer += 1;
+                if (animationTimer > 15)
+                {
+                    animationTimer = 0;
+                    if (currentCoordinateDroid < coordinatesRectangle.Length - 1)
+                    {
+                        currentCoordinateDroid++;
+                    }
+                    else
+                        currentCoordinateDroid = 0;
+                }
             }
             else
             {
                 droidRect.X -= droidSpeed;
+                animationTimer += 1;
+                if (animationTimer > 15)
+                {
+                    animationTimer = 0;
+                    if (currentCoordinateDroid < coordinatesRectangle.Length - 1)
+                    {
+                        currentCoordinateDroid++;
+                    }
+                    else
+                        currentCoordinateDroid = 0;
+                }
             }
             if (droidRect.Y < playerLoc.Y)
             {
                 droidRect.Y += droidSpeed;
-
+                animationTimer += 1;
+                if (animationTimer > 15)
+                {
+                    animationTimer = 0;
+                    if (currentCoordinateDroid < coordinatesRectangle.Length - 1)
+                    {
+                        currentCoordinateDroid++;
+                    }
+                    else
+                        currentCoordinateDroid = 0;
+                }
             }
             else
             {
                 droidRect.Y -= droidSpeed;
+                animationTimer += 1;
+                if (animationTimer > 15)
+                {
+                    animationTimer = 0;
+                    if (currentCoordinateDroid < coordinatesRectangle.Length - 1)
+                    {
+                        currentCoordinateDroid++;
+                    }
+                    else
+                        currentCoordinateDroid = 0;
+                }
             }
         }
         public void Draw(SpriteBatch Sprite)

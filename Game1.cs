@@ -15,7 +15,7 @@ namespace Star_Wars_Sepertist_Attck__Real
         SoundEffectInstance menuMusic, droidAttackTheme;
         SpriteFont copyrightFont;
         SoundEffect buttonClicked;
-        Texture2D menuImage, logo;
+        Texture2D menuImage, logo, theGrass;
         ButtonClass[] menuButtons;
         float timer;
         Random generator = new Random();
@@ -63,6 +63,7 @@ namespace Star_Wars_Sepertist_Attck__Real
             var spriteSheet = Content.Load<Texture2D>("Clone Trooper Better Sprite Sheet");
             droidSpriteSheet = Content.Load<Texture2D>("BattleDroid SpreadSheet");
             droidAttackTheme = Content.Load<SoundEffect>("sounds/DroidAttackTheme").CreateInstance();
+            theGrass = Content.Load<Texture2D>("TheGameGrass");
             var spriteSheetCoordinates = new Rectangle[]
             {
                 new Rectangle(7, 445, 50, 58), //StandStill
@@ -76,11 +77,14 @@ namespace Star_Wars_Sepertist_Attck__Real
             };
             droidspriteSheetCoordinates = new Rectangle[]
             {
-                new Rectangle(16, 23, 23,42), //StandStill
-                new Rectangle(16, 23, 23,42), //StandStill  
-                new Rectangle(16, 23, 23,42), //StandStill
-                new Rectangle(167, 150, 23, 42), //walk2  
-                new Rectangle (133, 79, 23, 42)
+                new Rectangle(76, 59, 36, 50), //StandStill
+                new Rectangle(115, 58, 36, 50), //StandStill  
+                new Rectangle(153, 59, 36, 50), //StandStill
+                new Rectangle(191, 60, 36, 50), //walk2  
+                new Rectangle(229, 59, 36, 50),
+                new Rectangle(267, 58, 36, 50),
+                new Rectangle(309, 59, 36, 50),
+                new Rectangle(343, 60, 36, 50),
                 //deez nuts
             };
             theCloneTrooper = new CloneTrooperClass(spriteSheet, spriteSheetCoordinates, 0, new Rectangle(300, 200, 50, 110), 7, Content.Load<Texture2D>("CloneBlast"), Content.Load<SoundEffect>("sounds/Clone BlastShotfIX"));
@@ -231,9 +235,11 @@ namespace Star_Wars_Sepertist_Attck__Real
             }
             else if (screen == Screen.TheGame)
             {
+                _spriteBatch.Draw(theGrass, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
                 theCloneTrooper.Draw(_spriteBatch);
                 foreach (Droid e in enemies)
                     e.Draw(_spriteBatch);
+               
             }
             else if (screen == Screen.Options)
             {
