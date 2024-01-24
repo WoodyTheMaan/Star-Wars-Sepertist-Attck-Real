@@ -12,11 +12,12 @@ namespace Star_Wars_Sepertist_Attck__Real
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        SoundEffectInstance menuMusic, droidAttackTheme;
-        SpriteFont copyrightFont;
+        SoundEffectInstance menuMusic, droidAttackTheme, optionTheme;
+        SpriteFont copyrightFont, cloneStory;
         SoundEffect buttonClicked;
         Texture2D menuImage, logo, theGrass;
         ButtonClass[] menuButtons;
+        ButtonClass[] optionButtons;
         float timer;
         Random generator = new Random();
 
@@ -63,7 +64,9 @@ namespace Star_Wars_Sepertist_Attck__Real
             var spriteSheet = Content.Load<Texture2D>("Clone Trooper Better Sprite Sheet");
             droidSpriteSheet = Content.Load<Texture2D>("BattleDroid SpreadSheet");
             droidAttackTheme = Content.Load<SoundEffect>("sounds/DroidAttackTheme").CreateInstance();
+            optionTheme = Content.Load<SoundEffect>("Option Theme").CreateInstance();
             theGrass = Content.Load<Texture2D>("TheGameGrass");
+            cloneStory = Content.Load<SpriteFont>("File");
             var spriteSheetCoordinates = new Rectangle[]
             {
                 new Rectangle(7, 445, 50, 58), //StandStill
@@ -105,9 +108,13 @@ namespace Star_Wars_Sepertist_Attck__Real
             menuButtons = new ButtonClass[]
             {
                 new(rectTex, new Rectangle(220, 150, 235, 40), "PLAY CAMPAIGN", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File")),
-                new(rectTex, new Rectangle(275, 225, 125, 40), "OPTIONS", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File")),
+                new(rectTex, new Rectangle(240, 225, 190, 40), "INFORMATION", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File")),
                 new(rectTex, new Rectangle(220, 300, 235, 40), "EXIT TO WINDOWS", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File"))
 
+            };
+            optionButtons = new ButtonClass[]
+            {
+                new(rectTex, new Rectangle(450, 435, 200, 40), "Back To Menu", Content.Load<SoundEffect>("sounds/Menu Button Hover"), Content.Load<SpriteFont>("File"))
             };
         }
 
@@ -124,6 +131,7 @@ namespace Star_Wars_Sepertist_Attck__Real
                 if (menuButtons[0].Update(mouse))
                 {
                     screen = Screen.TheGame;
+                    optionTheme.Stop();
                     menuMusic.Stop();
                     buttonClicked.Play();
                     speedOfDroid = 1;
@@ -133,12 +141,27 @@ namespace Star_Wars_Sepertist_Attck__Real
                 else if (menuButtons[1].Update(mouse))
                 {
                     screen = Screen.Options;
+                    menuMusic.Stop();
+                    optionTheme.Play();
                     buttonClicked.Play();
+
                 }
                 else if (menuButtons[2].Update(mouse))
                 {
                     Exit();
+                    menuMusic.Stop();   
                     buttonClicked.Play();
+                }
+            }
+            if (screen == Screen.Options)
+            {
+                var mouse = Mouse.GetState();
+                if (optionButtons[0].Update(mouse))
+                {
+                    screen = Screen.Menu;
+                    buttonClicked.Play();
+                    optionTheme.Stop();
+
                 }
             }
             else if (screen == Screen.TheGame)
@@ -190,7 +213,8 @@ namespace Star_Wars_Sepertist_Attck__Real
                             }
                             enemies.Add(new Droid(droidSpriteSheet, droidspriteSheetCoordinates, 0, droidRect, speedOfDroid, rectTex));
                         }
-                       
+
+
                     }
                     timer = 0;
                     playerWinningSoFar += 1;
@@ -243,7 +267,9 @@ namespace Star_Wars_Sepertist_Attck__Real
             }
             else if (screen == Screen.Options)
             {
-
+                foreach (ButtonClass b in optionButtons)
+                    b.Draw(_spriteBatch);
+                _spriteBatch.DrawString(cloneStory, "As the Clone Wars continues the sepertists push\n the Republic back but the Republic won't go\n without a fight, they are sending Clone 991A25\n on a mission  alone to fight a small invasion of\n sepertists on the planet of Naboo. As\n Clone 991A25 pushes the sepertists back the\n Republic is trying to regain political gain\n as the people of the galaxy fear the sepertists\n strong push onto the Republic. The Jedi Order\n has chosen to stay out of the politics of this\n push and continue to search for the Sith\n and their motives...", new Vector2(10, 10), Color.Yellow);
             }
 
 

@@ -90,6 +90,12 @@
 /processorParam:TextureFormat=Color
 /build:Main Menu Picture.png
 
+#begin Option Theme.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Option Theme.mp3
+
 #begin RealProjectLogo.png
 /importer:TextureImporter
 /processor:TextureProcessor
